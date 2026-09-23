@@ -1,0 +1,4 @@
+# Fichero común del Config Server (se sirve sin sufijo de entorno,
+# combinado con el específico de cada perfil).
+# Vacío intencionalmente: no hay ninguna property que sea idéntica
+# en los 3 entornos Y gestionada centralmente sin necesidad de redeploy.

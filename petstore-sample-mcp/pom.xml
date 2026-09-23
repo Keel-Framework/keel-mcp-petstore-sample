@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.keelframework.sample</groupId>
+        <artifactId>mcp-petstore-sample</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>petstore-sample-mcp</artifactId>
+    <packaging>jar</packaging>
+    <name>mcp-petstore-sample-mcp</name>
+    <description>MCP Tools / Resources / Prompts — mcp-petstore-sample</description>
+
+    <dependencies>
+
+        <!-- ============================================ -->
+        <!-- MODEL — DTO / Entity / Mapper de este proyecto -->
+        <!-- ============================================ -->
+        <dependency>
+            <groupId>io.keelframework.sample</groupId>
+            <artifactId>petstore-sample-model</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- ============================================ -->
+        <!-- SPRING AI MCP SERVER                        -->
+        <!-- gestionada por spring-ai-bom                -->
+        <!-- Starter según transport: mvc o webflux      -->
+        <!-- ============================================ -->
+                <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-mcp-server-webmvc</artifactId>
+            <!-- <version>${springAiVersion}</version> -->
+        </dependency>
+        
+        <!-- ================================================ -->
+        <!-- Observabilidad — Logging Auth (usado directamente por las tools) -->
+        <!-- ================================================ -->
+        <dependency>
+            <groupId>io.keelframework.mcp.observability</groupId>
+            <artifactId>keel-observability-logging</artifactId>
+        </dependency>
+
+        <!-- ================================================ -->
+        <!-- REST Client — usado por los tools para invocar servicios externos -->
+        <!-- ================================================ -->
+        <dependency>
+            <groupId>io.keelframework.mcp.adapters</groupId>
+            <artifactId>keel-adapter-rest-client</artifactId>
+        </dependency>
+
+
+        <!-- ============================================ -->
+        <!-- LOMBOK                                      -->
+        <!-- ============================================ -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ============================================ -->
+        <!-- Exception Custom                                      -->
+        <!-- ============================================ -->
+        <dependency>
+            <groupId>io.keelframework.mcp.common</groupId>
+            <artifactId>keel-common-exceptions</artifactId>
+        </dependency>
+
+        <!-- ============================================ -->
+        <!-- TEST                                        -->
+        <!-- ============================================ -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <compilerArgs>
+                        <arg>-proc:full</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

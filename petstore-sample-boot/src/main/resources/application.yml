@@ -1,0 +1,124 @@
+spring:
+  threads:
+    virtual:
+      enabled: true
+  main:
+    web-application-type: servlet
+  ai:
+    mcp:
+      server:
+        type: SYNC
+        protocol: STREAMABLE
+        stdio:
+          enabled: false
+        streamable-http:
+          mcp-endpoint: /mcp
+          keep-alive-interval: 30s
+        annotation-scanner:
+          enabled: true
+server:
+  port: 8080
+  ssl:
+    enabled: true
+
+# ============================================
+# Keel Framework — MCP
+# ============================================
+keel:
+  adapters:
+    rest-client:
+      # ==========================================
+      # Keel Framework — RestClient Configuration
+      # Configuration: SSL / REST Services / HTTP Client
+      # ==========================================
+      ssl:
+        enabled: true
+        trust-store: ${TRUSTSTORE_LOCAL}
+        trust-store-password: ${TRUSTSTORE_PASSWORD}
+        trust-store-type: ${TRUSTSTORE_TYPE}
+
+      services: { }
+      # services:
+      #   name-service:
+      #     base-url:     https://api.ejemplo.sca.es
+      #     log-requests: true
+      http-client:
+        socket-timeout: 60000
+        connect-timeout: 60000
+        request-timeout: 60000
+        max-total-connections: 200
+        max-connections-per-route: 20
+        connection-time-to-live: 300000
+        keep-alive: 10000
+
+    cache:
+      # ============================================
+      # Keel Framework — Cache Cafeína
+      # ============================================
+      expire-after-write: 30m
+      expire-after-access: 30m
+      maximum-size: 500
+      record-stats: true
+  mcp:
+    transport:
+      # ==========================================
+      # Keel Framework — Transport Module
+      # Includes: CORS / JWT Authentication / Session Management / Streamable HTTP
+      # ==========================================
+      cors:
+        # ==========================================
+        # Keel Framework — Web Browser CORS Configuration
+        # ==========================================
+        enabled: false
+        path-pattern: /mcp/**
+        allowed-origins: [ ]
+        allowed-methods: [ GET, POST, OPTIONS ]
+        allowed-headers: [ "*" ]
+        exposed-headers: [ Mcp-Session-Id ]
+        allow-credentials: true
+        max-age: 3600
+
+      auth:
+        # ==========================================
+        # # Keel Framework — IdP / JWT Authentication
+        # ==========================================
+        enabled: true
+        jwt:
+          issuer:   ${JWT_ISSUER}
+          jwks-uri: ${JWKS_URI}
+          # Optional
+          audience: ${JWT_AUDIENCE:}
+          jwks-ttl: 1h
+        excluded-paths:
+          - /actuator/health
+          - /actuator/info
+
+      session:
+        # ==========================================
+        # Keel Framework — Streamable HTTP Session Usage
+        # ==========================================
+        max-sessions: 500
+        timeout: 30m
+        log-events:   false
+
+    observability:
+      # ==========================================
+      # Keel Framework — Observability — structured JSON traces
+      # ==========================================
+      enabled:    ${MCP_OBSERVABILITY_ENABLED:true}
+      technical:  ${MCP_OBSERVABILITY_TECHNICAL:true}
+      functional: ${MCP_OBSERVABILITY_FUNCTIONAL:true}
+      security:   ${MCP_OBSERVABILITY_SECURITY:true}
+
+
+# ============================================
+# Spring Boot Actuator
+# ============================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics
+  endpoint:
+    health:
+      show-details: always

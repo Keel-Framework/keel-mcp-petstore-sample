@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.keelframework.sample</groupId>
+        <artifactId>mcp-petstore-sample</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>petstore-sample-boot</artifactId>
+    <name>mcp-petstore-sample-boot</name>
+    <packaging>war</packaging>
+    <description>MCP Server Boot — mcp-petstore-sample</description>
+
+    <dependencies>
+
+        <!-- Config Server client -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Módulo con las tools/resources/prompts MCP de este proyecto -->
+        <dependency>
+            <groupId>io.keelframework.sample</groupId>
+            <artifactId>mcp-petstore-sample-mcp</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- ============================================ -->
+        <!-- FRAMEWORK — Transport Streamable MVC         -->
+        <!-- Includes transitively:                      -->
+        <!--   transport-auth-service  → JWT + Security   -->
+        <!--   transport-session-service → session        -->
+        <!--   adapter-auth-idp → JWT validation          -->
+        <!--   adapter-cache-caffeine → caching           -->
+        <!-- ============================================ -->
+        <dependency>
+            <groupId>io.keelframework.mcp.transport</groupId>
+            <artifactId>keel-transport-streamable-mvc</artifactId>
+        </dependency>
+
+        <!-- CORS is optional — the project only adds it if /mcp is exposed to a browser -->        <dependency>
+            <groupId>io.keelframework.mcp.transport</groupId>
+            <artifactId>keel-transport-cors</artifactId>
+        </dependency>
+
+        <!-- ============================================ -->
+        <!-- Observability — Authentication Logging      -->
+        <!-- ============================================ -->
+        <dependency>
+            <groupId>io.keelframework.mcp.observability</groupId>
+            <artifactId>keel-observability-logging</artifactId>
+        </dependency>
+
+        <!-- ============================================ -->
+        <!-- LOMBOK                                      -->
+        <!-- ============================================ -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ============================================ -->
+        <!-- TEST                                        -->
+        <!-- ============================================ -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <compilerArgs>
+                        <arg>-proc:full</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+
+            <!-- repackage: genera el jar ejecutable, solo aplica en el módulo boot -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

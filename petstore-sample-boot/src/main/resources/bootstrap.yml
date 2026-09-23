@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: mcp-petstore-sample
+  profiles:
+    active: ${ENVIRONMENT:local}
+
+---
+# --Development, preproduction and production profiles
+spring:
+  config:
+    activate:
+      on-profile: dev,pre,pro
+  cloud:
+    config:
+      fail-fast: true
+      uri: ${SERVICE_CONFIG_URI:http://configserver:8080}
+  main:
+    allow-bean-definition-overriding: true
+
+---
+# --Local
+spring:
+  config:
+    activate:
+      on-profile: local
+    additional-location: classpath:application.yml,optional:classpath:mcp-petstore-sample.yml,classpath:application-local.yml,optional:classpath:mcp-petstore-sample-local.yml
+  cloud:
+    config:
+      enabled: false

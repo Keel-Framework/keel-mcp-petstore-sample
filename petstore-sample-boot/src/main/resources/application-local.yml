@@ -1,0 +1,42 @@
+# application-local.yml
+server:
+  ssl:
+    enabled: false
+
+keel:
+  adapters:
+    rest-client:
+      ssl:
+        enabled: false
+        trust-store: ${TRUSTSTORE_LOCAL}
+        trust-store-password: ${TRUSTSTORE_PASSWORD}
+        trust-store-type: ${TRUSTSTORE_TYPE}
+      services:
+        petstore:
+          base-url: https://petstore3.swagger.io/api/v3
+          log-requests: true
+  mcp:
+    transport:
+      session:
+        max-sessions: 500
+        timeout: 30m
+        log-events: false
+      auth:
+        enabled: true
+        jwt:
+          issuer: https://demo.duendesoftware.com
+          jwks-uri: https://demo.duendesoftware.com/.well-known/openid-configuration/jwks
+          jwks-ttl: 1h
+      cors:
+        enabled: false
+        allowed-origins: [ ]
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    root: INFO
+    io.keelframework.mcp.transport.streamable.interceptor.McpSessionInterceptor: TRACE

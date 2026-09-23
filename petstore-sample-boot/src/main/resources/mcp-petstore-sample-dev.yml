@@ -1,0 +1,48 @@
+# ==========================================
+# This file is NEVER loaded by the running application — it only
+# exists as a version-controlled source of truth alongside the code.
+# ==========================================
+# ==========================================
+# Backend services invoked by this server's MCP tools.
+# "services" is a MAP of service-name → configuration:
+# the key (e.g. "keelExample") is the name you'll later use in
+# restClientFactory.getClient("keelExample").
+#
+# WARNING: do not put base-url/log-requests directly under
+# "services" without that intermediate name level — Spring
+# would interpret them as service names of their own with no
+# configuration, and getClient(...) would fail to find the
+# intended backend.
+#
+# Add one entry per backend your project needs, with the real
+# URL for this specific environment (dev/pre/pro).
+# ==========================================
+# ==========================================
+# Only enable CORS if this MCP server will be invoked from a
+# browser (e.g. MCP Inspector or another web-based tool). If
+# enabled=true, allowed-origins is required and must list
+# explicit domains — never "*" while allow-credentials=true
+# (inherited from application.yaml), since browsers reject
+# that combination for security reasons.
+# ==========================================
+
+keel:
+  adapters:
+    rest-client:
+      services: {}
+        #   name-service:
+        #     base-url:     https://api.ejemplo.sca.es
+        #     log-requests: true
+  mcp:
+    transport:
+      session:
+        max-sessions: 500
+        timeout: 30m
+        log-events: false
+      cors:
+        enabled: false          # each project turns this on as needed
+        allowed-origins: [ ]    # required if enabled=true; use real domains, e.g.:
+        #   - https://mcp-inspector-route.dev.cloud
+logging:
+  level:
+    root: INFO

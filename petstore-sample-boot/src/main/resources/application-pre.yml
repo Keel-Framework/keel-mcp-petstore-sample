@@ -1,0 +1,15 @@
+# application-pre.yml
+server:
+  ssl:
+    enabled: true
+
+keel:
+  mcp:
+    transport:
+      auth:
+        enabled: true
+
+management:
+  endpoint:
+    health:
+      show-details: always
