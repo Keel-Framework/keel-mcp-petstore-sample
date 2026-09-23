@@ -1,4 +1,14 @@
-# Keel MCP Petstore Sample
+<h1>
+<img src="img/logo_keel_framework.png" width="490" alt="Keel">
+</h1>
+
+> ** MCP Petstore Sample
+---
+![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.6-6DB33F?logo=springboot)
+![Spring AI](https://img.shields.io/badge/Spring%20AI-MCP-6DB33F?logo=spring)
+![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
+---
 
 A reference MCP Server built with the [Keel Framework](https://keelframework.io), demonstrating a complete, real-world integration: JWT authentication, a REST backend adapter, structured logging, and MCP Tools / Prompts / Resources — all working out of the box against **public, zero-setup services**, so you can clone, run, and explore without registering for anything.
 
